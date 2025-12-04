@@ -1,9 +1,8 @@
-//your JS code here. If required.
 const input = document.getElementById("search-input");
 const resultsDiv = document.getElementById("search-results");
 
 let debounceTimer = null;
-let lastQueryId = 0; 
+let lastQueryId = 0;
 
 async function searchUrbanDictionary(term, queryId) {
   const url = `https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${encodeURIComponent(term)}`;
@@ -24,15 +23,15 @@ async function searchUrbanDictionary(term, queryId) {
 
     renderResults(data.list);
   } catch (err) {
-    resultsDiv.innerHTML = `<p>Error fetching results.</p>`;
+    renderNoResults();
   }
 }
 
 function renderResults(list) {
-  resultsDiv.innerHTML = ""; 
+  resultsDiv.innerHTML = "";
 
   if (!list || list.length === 0) {
-    resultsDiv.textContent = "No results found.";
+    renderNoResults();
     return;
   }
 
@@ -40,14 +39,23 @@ function renderResults(list) {
     const div = document.createElement("div");
     div.className = "result";
 
+    const customPermalink = `http://${item.word.toLowerCase()}.urbanup.com/`;
+
     div.innerHTML = `
       <div class="result-title">${item.word}</div>
       <div class="result-snippet">${item.definition}</div>
-      <a class="result-url" href="${item.permalink}" target="_blank">${item.permalink}</a>
+      <a class="result-url" href="${customPermalink}" target="_blank">${customPermalink}</a>
     `;
 
     resultsDiv.appendChild(div);
   });
+}
+
+function renderNoResults() {
+  resultsDiv.innerHTML = "";
+  const div = document.createElement("div");
+  div.textContent = "No results found.";
+  resultsDiv.appendChild(div);
 }
 
 input.addEventListener("input", () => {

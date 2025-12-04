@@ -1,1 +1,21 @@
 /*  your css code here. If applicable */
+.result {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.result-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.result-snippet {
+  margin-top: 4px;
+}
+
+.result-url {
+  margin-top: 6px;
+  color: blue;
+  text-decoration: underline;
+  display: block;
+}
